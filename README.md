@@ -1,16 +1,31 @@
-# coffee_roulette
+# Coffee Roulette
 
-A new Flutter project.
+A static website built with Flutter and Dart, hosted on GitHub Pages.
 
-## Getting Started
+**Live site:** https://georgery.github.io/coffee_roulette/
 
-This project is a starting point for a Flutter application.
+## Project Structure
 
-A few resources to get you started if this is your first Flutter project:
+- `lib/` — Dart/Flutter source code
+- `web/` — Web-specific assets and index.html template
+- `docs/` — Built website (served by GitHub Pages)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Development
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Prerequisites
+
+- [Flutter SDK](https://docs.flutter.dev/get-started/install)
+
+### Build and deploy
+
+The website is built directly into the `docs/` folder, which GitHub Pages serves.
+
+```bash
+flutter build web --base-href "/coffee_roulette/" --output docs
+```
+
+**Why `--base-href`?**  
+GitHub Pages serves this site at `https://georgery.github.io/coffee_roulette/` (not at the root). The `--base-href` flag ensures all asset paths are relative to `/coffee_roulette/`.
+
+**Why `--output docs`?**  
+GitHub Pages can only serve from the root or `/docs` folder. This flag builds directly to `docs/`, avoiding a manual copy step.
