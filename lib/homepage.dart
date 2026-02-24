@@ -25,15 +25,15 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _onFileDropped(String content) {
     final lines = content.split('\n');
-    final people = <Person>[];
+    final newPeople = <Person>[];
     for (final line in lines) {
       final trimmed = line.trim();
       if (trimmed.isNotEmpty) {
-        people.add(Person.fromLine(trimmed));
+        newPeople.add(Person.fromLine(trimmed));
       }
     }
     setState(() {
-      _people = people;
+      _people = {..._people, ...newPeople}.toList();
     });
   }
 
@@ -55,29 +55,93 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(32.0),
-        child: Column(
-          children: [
-            FileDropZone(
-              onFileDropped: _onFileDropped,
-            ),
-            if (_people.isNotEmpty) ...[
-              const SizedBox(height: 16),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: _people.length,
-                  itemBuilder: (context, index) {
-                    final person = _people[index];
-                    return ListTile(
-                      title: Text(person.name),
-                      subtitle: person.email != null ? Text(person.email!) : null,
-                    );
-                  },
-                ),
+      body: Center(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            maxWidth: MediaQuery.of(context).size.width * 0.5,
+          ),
+          child: Container(
+            decoration: const BoxDecoration(
+              border: Border.symmetric(
+                vertical: BorderSide(color: Color(0xFFE0E0E0), width: 1),
               ),
-            ],
-          ],
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(32.0),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Flexible(
+                        child: ConstrainedBox(
+                          constraints: const BoxConstraints(maxWidth: 150, maxHeight: 150),
+                          child: AspectRatio(
+                            aspectRatio: 1,
+                            child: OutlinedButton(
+                              onPressed: _people.isEmpty
+                                  ? null
+                                  : () {
+                                      setState(() {
+                                        _people = [];
+                                      });
+                                    },
+                              style: OutlinedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                              ),
+                              child: const FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(Icons.delete, size: 48),
+                                      SizedBox(height: 4),
+                                      Text('Delete All'),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 16),
+                      Flexible(
+                        child: ConstrainedBox(
+                          constraints: const BoxConstraints(maxWidth: 150, maxHeight: 150),
+                          child: AspectRatio(
+                            aspectRatio: 1,
+                            child: FileDropZone(
+                              onFileDropped: _onFileDropped,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  if (_people.isNotEmpty) ...[
+                    const SizedBox(height: 16),
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: _people.length,
+                        itemBuilder: (context, index) {
+                          final person = _people[index];
+                          return ListTile(
+                            title: Text(person.name),
+                            subtitle: person.email != null ? Text(person.email!) : null,
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+            ),
+          ),
         ),
       ),
     );

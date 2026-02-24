@@ -11,4 +11,12 @@ class Person {
       email: parts.length > 1 && parts[1].isNotEmpty ? parts[1] : null,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Person && name == other.name && email == other.email;
+
+  @override
+  int get hashCode => Object.hash(name, email);
 }

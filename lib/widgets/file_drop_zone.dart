@@ -34,8 +34,6 @@ class _FileDropZoneState extends State<FileDropZone> {
       },
       child: widget.child ??
           Container(
-            width: double.infinity,
-            height: 200,
             decoration: BoxDecoration(
               border: Border.all(
                 color: _isDragging ? Colors.blue : Colors.grey,
@@ -47,24 +45,35 @@ class _FileDropZoneState extends State<FileDropZone> {
                   ? Colors.blue.withOpacity(0.1)
                   : Colors.grey.withOpacity(0.05),
             ),
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.upload_file,
-                    size: 48,
-                    color: _isDragging ? Colors.blue : Colors.grey,
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    _isDragging ? 'Drop file here' : 'Drag and drop a text file',
-                    style: TextStyle(
-                      color: _isDragging ? Colors.blue : Colors.grey,
-                      fontSize: 16,
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      _isDragging ? '' : 'Drop File to',
+                      style: TextStyle(
+                        color: _isDragging ? Colors.blue : Colors.grey,
+                        fontSize: 12,
+                      ),
                     ),
-                  ),
-                ],
+                    Icon(
+                      Icons.upload_file,
+                      size: 48,
+                      color: _isDragging ? Colors.blue : Colors.grey,
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      _isDragging ? 'Drop file here' : 'Add Names',
+                      style: TextStyle(
+                        color: _isDragging ? Colors.blue : Colors.grey,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
