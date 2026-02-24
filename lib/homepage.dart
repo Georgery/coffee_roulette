@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'widgets/file_drop_zone.dart';
+import 'widgets/person_tile.dart';
 import 'person.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -35,6 +36,106 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _people = {..._people, ...newPeople}.toList();
     });
+  }
+
+  void _deletePerson(int index) {
+    setState(() {
+      _people.removeAt(index);
+    });
+  }
+
+  void _editPerson(int index) {
+    final person = _people[index];
+    final nameController = TextEditingController(text: person.name);
+    final emailController = TextEditingController(text: person.email ?? '');
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Edit Person'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: nameController,
+              decoration: const InputDecoration(labelText: 'Name'),
+            ),
+            const SizedBox(height: 8),
+            TextField(
+              controller: emailController,
+              decoration: const InputDecoration(labelText: 'Email'),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+              setState(() {
+                _people[index] = Person(
+                  name: nameController.text,
+                  email: emailController.text.isEmpty ? null : emailController.text,
+                );
+              });
+              Navigator.pop(context);
+            },
+            child: const Text('Save'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _addPerson() {
+    final nameController = TextEditingController();
+    final emailController = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Add Person'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: nameController,
+              decoration: const InputDecoration(labelText: 'Name'),
+            ),
+            const SizedBox(height: 8),
+            TextField(
+              controller: emailController,
+              decoration: const InputDecoration(labelText: 'Email'),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+              if (nameController.text.isNotEmpty) {
+                setState(() {
+                  _people = {
+                    ..._people,
+                    Person(
+                      name: nameController.text,
+                      email: emailController.text.isEmpty ? null : emailController.text,
+                    ),
+                  }.toList();
+                });
+              }
+              Navigator.pop(context);
+            },
+            child: const Text('Add'),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -123,21 +224,42 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ],
                   ),
-                  if (_people.isNotEmpty) ...[
-                    const SizedBox(height: 16),
-                    Expanded(
-                      child: ListView.builder(
-                        itemCount: _people.length,
-                        itemBuilder: (context, index) {
-                          final person = _people[index];
-                          return ListTile(
-                            title: Text(person.name),
-                            subtitle: person.email != null ? Text(person.email!) : null,
+                  const SizedBox(height: 16),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: _people.length + 1,
+                      itemBuilder: (context, index) {
+                        if (index == _people.length) {
+                          return Align(
+                            alignment: Alignment.centerRight,
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 8.0),
+                              child: SizedBox(
+                                width: 40,
+                                height: 40,
+                                child: OutlinedButton(
+                                  onPressed: _addPerson,
+                                  style: OutlinedButton.styleFrom(
+                                    padding: EdgeInsets.zero,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                  child: const Icon(Icons.add, size: 20),
+                                ),
+                              ),
+                            ),
                           );
-                        },
-                      ),
+                        }
+                        final person = _people[index];
+                        return PersonTile(
+                          person: person,
+                          onEdit: () => _editPerson(index),
+                          onDelete: () => _deletePerson(index),
+                        );
+                      },
                     ),
-                  ],
+                  ),
                 ],
               ),
             ),
