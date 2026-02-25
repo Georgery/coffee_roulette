@@ -23,6 +23,21 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   List<Person> _people = [];
+  final _addButtonFocusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _addButtonFocusNode.requestFocus();
+    });
+  }
+
+  @override
+  void dispose() {
+    _addButtonFocusNode.dispose();
+    super.dispose();
+  }
 
   void _onFileDropped(String content) {
     final lines = content.split('\n');
@@ -266,6 +281,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 width: 40,
                                 height: 40,
                                 child: OutlinedButton(
+                                  focusNode: _addButtonFocusNode,
                                   onPressed: _addPerson,
                                   style: OutlinedButton.styleFrom(
                                     padding: EdgeInsets.zero,
