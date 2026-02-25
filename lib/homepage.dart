@@ -48,6 +48,23 @@ class _MyHomePageState extends State<MyHomePage> {
     final person = _people[index];
     final nameController = TextEditingController(text: person.name);
     final emailController = TextEditingController(text: person.email ?? '');
+    final nameFocusNode = FocusNode();
+    final emailFocusNode = FocusNode();
+    final saveFocusNode = FocusNode();
+
+    nameController.selection = TextSelection.fromPosition(
+      TextPosition(offset: nameController.text.length),
+    );
+
+    void saveAndClose() {
+      setState(() {
+        _people[index] = Person(
+          name: nameController.text,
+          email: emailController.text.isEmpty ? null : emailController.text,
+        );
+      });
+      Navigator.pop(context);
+    }
 
     showDialog(
       context: context,
@@ -58,12 +75,19 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             TextField(
               controller: nameController,
+              focusNode: nameFocusNode,
+              autofocus: true,
               decoration: const InputDecoration(labelText: 'Name'),
+              textInputAction: TextInputAction.next,
+              onSubmitted: (_) => emailFocusNode.requestFocus(),
             ),
             const SizedBox(height: 8),
             TextField(
               controller: emailController,
+              focusNode: emailFocusNode,
               decoration: const InputDecoration(labelText: 'Email'),
+              textInputAction: TextInputAction.next,
+              onSubmitted: (_) => saveFocusNode.requestFocus(),
             ),
           ],
         ),
@@ -73,15 +97,8 @@ class _MyHomePageState extends State<MyHomePage> {
             child: const Text('Cancel'),
           ),
           TextButton(
-            onPressed: () {
-              setState(() {
-                _people[index] = Person(
-                  name: nameController.text,
-                  email: emailController.text.isEmpty ? null : emailController.text,
-                );
-              });
-              Navigator.pop(context);
-            },
+            focusNode: saveFocusNode,
+            onPressed: saveAndClose,
             child: const Text('Save'),
           ),
         ],
@@ -92,6 +109,23 @@ class _MyHomePageState extends State<MyHomePage> {
   void _addPerson() {
     final nameController = TextEditingController();
     final emailController = TextEditingController();
+    final emailFocusNode = FocusNode();
+    final addFocusNode = FocusNode();
+
+    void addAndClose() {
+      if (nameController.text.isNotEmpty) {
+        setState(() {
+          _people = {
+            ..._people,
+            Person(
+              name: nameController.text,
+              email: emailController.text.isEmpty ? null : emailController.text,
+            ),
+          }.toList();
+        });
+      }
+      Navigator.pop(context);
+    }
 
     showDialog(
       context: context,
@@ -102,12 +136,18 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             TextField(
               controller: nameController,
+              autofocus: true,
               decoration: const InputDecoration(labelText: 'Name'),
+              textInputAction: TextInputAction.next,
+              onSubmitted: (_) => emailFocusNode.requestFocus(),
             ),
             const SizedBox(height: 8),
             TextField(
               controller: emailController,
+              focusNode: emailFocusNode,
               decoration: const InputDecoration(labelText: 'Email'),
+              textInputAction: TextInputAction.next,
+              onSubmitted: (_) => addFocusNode.requestFocus(),
             ),
           ],
         ),
@@ -117,20 +157,8 @@ class _MyHomePageState extends State<MyHomePage> {
             child: const Text('Cancel'),
           ),
           TextButton(
-            onPressed: () {
-              if (nameController.text.isNotEmpty) {
-                setState(() {
-                  _people = {
-                    ..._people,
-                    Person(
-                      name: nameController.text,
-                      email: emailController.text.isEmpty ? null : emailController.text,
-                    ),
-                  }.toList();
-                });
-              }
-              Navigator.pop(context);
-            },
+            focusNode: addFocusNode,
+            onPressed: addAndClose,
             child: const Text('Add'),
           ),
         ],
