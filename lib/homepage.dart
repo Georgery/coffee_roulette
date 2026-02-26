@@ -1,3 +1,5 @@
+import 'dart:html' as html;
+
 import 'package:flutter/material.dart';
 import 'widgets/file_drop_zone.dart';
 import 'widgets/person_tile.dart';
@@ -37,6 +39,16 @@ class _MyHomePageState extends State<MyHomePage> {
   void dispose() {
     _addButtonFocusNode.dispose();
     super.dispose();
+  }
+
+  void _downloadPeople() {
+    final content = _people.map((p) => p.toLine()).join('\n');
+    final blob = html.Blob([content], 'text/plain');
+    final url = html.Url.createObjectUrlFromBlob(blob);
+    final anchor = html.AnchorElement(href: url)
+      ..setAttribute('download', 'people.txt')
+      ..click();
+    html.Url.revokeObjectUrl(url);
   }
 
   void _onFileDropped(String content) {
@@ -277,20 +289,46 @@ class _MyHomePageState extends State<MyHomePage> {
                             alignment: Alignment.centerRight,
                             child: Padding(
                               padding: const EdgeInsets.only(top: 8.0),
-                              child: SizedBox(
-                                width: 40,
-                                height: 40,
-                                child: OutlinedButton(
-                                  focusNode: _addButtonFocusNode,
-                                  onPressed: _addPerson,
-                                  style: OutlinedButton.styleFrom(
-                                    padding: EdgeInsets.zero,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  SizedBox(
+                                    width: 40,
+                                    height: 40,
+                                    child: Tooltip(
+                                      message: 'Add Person',
+                                      child: OutlinedButton(
+                                        focusNode: _addButtonFocusNode,
+                                        onPressed: _addPerson,
+                                        style: OutlinedButton.styleFrom(
+                                          padding: EdgeInsets.zero,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(8),
+                                          ),
+                                        ),
+                                        child: const Icon(Icons.add, size: 20),
+                                      ),
                                     ),
                                   ),
-                                  child: const Icon(Icons.add, size: 20),
-                                ),
+                                  const SizedBox(height: 8),
+                                  SizedBox(
+                                    width: 40,
+                                    height: 40,
+                                    child: Tooltip(
+                                      message: 'Download List',
+                                      child: OutlinedButton(
+                                        onPressed: _people.isEmpty ? null : _downloadPeople,
+                                        style: OutlinedButton.styleFrom(
+                                          padding: EdgeInsets.zero,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(8),
+                                          ),
+                                        ),
+                                        child: const Icon(Icons.download, size: 20),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           );

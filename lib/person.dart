@@ -12,6 +12,13 @@ class Person {
     );
   }
 
+  String toLine() {
+    if (email != null && email!.isNotEmpty) {
+      return '$name, $email';
+    }
+    return name;
+  }
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
