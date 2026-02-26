@@ -420,6 +420,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: Padding(
                     padding: const EdgeInsets.all(32.0),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         if (_people.isNotEmpty)
                           Row(
@@ -460,7 +461,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         if (_matchedGroups.isNotEmpty) ...[
                           const SizedBox(height: 24),
                           const Text(
-                            'Matched Groups:',
+                            'Matched Groups',
+                            textAlign: TextAlign.left,
                             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                           ),
                           const SizedBox(height: 12),
