@@ -1,6 +1,8 @@
 import 'dart:html' as html;
+import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'widgets/file_drop_zone.dart';
 import 'widgets/person_tile.dart';
 import 'person.dart';
@@ -25,6 +27,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   List<Person> _people = [];
+  List<List<Person>> _matchedGroups = [];
   final _addButtonFocusNode = FocusNode();
 
   @override
@@ -68,7 +71,63 @@ class _MyHomePageState extends State<MyHomePage> {
   void _deletePerson(int index) {
     setState(() {
       _people.removeAt(index);
+      _matchedGroups = [];
     });
+  }
+
+  void _matchPeople() {
+    if (_people.isEmpty) return;
+
+    final random = Random();
+    final shuffled = List<Person>.from(_people)..shuffle(random);
+    final groups = <List<Person>>[];
+
+    int i = 0;
+    while (i < shuffled.length) {
+      final remaining = shuffled.length - i;
+      if (remaining == 3) {
+        groups.add([shuffled[i], shuffled[i + 1], shuffled[i + 2]]);
+        i += 3;
+      } else if (remaining >= 2) {
+        groups.add([shuffled[i], shuffled[i + 1]]);
+        i += 2;
+      } else {
+        groups.add([shuffled[i]]);
+        i += 1;
+      }
+    }
+
+    setState(() {
+      _matchedGroups = groups;
+    });
+  }
+
+  int get _maxNameLength {
+    if (_people.isEmpty) return 0;
+    return _people.map((p) => p.name.length).reduce((a, b) => a > b ? a : b);
+  }
+
+  String _getMatchedGroupsText() {
+    final maxLen = _maxNameLength;
+    final buffer = StringBuffer();
+    for (final group in _matchedGroups) {
+      if (group.length == 2) {
+        buffer.writeln('${group[0].name.padRight(maxLen)} ↔ ${group[1].name}');
+      } else if (group.length == 3) {
+        buffer.writeln('${group[0].name.padRight(maxLen)} ↔ ${group[1].name.padRight(maxLen)} ↔ ${group[2].name}');
+      } else if (group.length == 1) {
+        buffer.writeln(group[0].name);
+      }
+    }
+    return buffer.toString().trim();
+  }
+
+  void _copyMatchesToClipboard() {
+    final text = _getMatchedGroupsText();
+    Clipboard.setData(ClipboardData(text: text));
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Matches copied to clipboard!')),
+    );
   }
 
   void _editPerson(int index) {
@@ -214,21 +273,25 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: ConstrainedBox(
           constraints: BoxConstraints(
-            maxWidth: MediaQuery.of(context).size.width * 0.5,
+            maxWidth: MediaQuery.of(context).size.width * 0.6,
           ),
-          child: Container(
-            decoration: const BoxDecoration(
-              border: Border.symmetric(
-                vertical: BorderSide(color: Color(0xFFE0E0E0), width: 1),
-              ),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(32.0),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: Container(
+                  decoration: const BoxDecoration(
+                    border: Border.symmetric(
+                      vertical: BorderSide(color: Color(0xFFE0E0E0), width: 1),
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(32.0),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
                       Flexible(
                         child: ConstrainedBox(
                           constraints: const BoxConstraints(maxWidth: 150, maxHeight: 150),
@@ -345,6 +408,145 @@ class _MyHomePageState extends State<MyHomePage> {
                 ],
               ),
             ),
+          ),
+        ),
+              Expanded(
+                child: Container(
+                  decoration: const BoxDecoration(
+                    border: Border(
+                      right: BorderSide(color: Color(0xFFE0E0E0), width: 1),
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(32.0),
+                    child: Column(
+                      children: [
+                        if (_people.isNotEmpty)
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Flexible(
+                                child: ConstrainedBox(
+                                  constraints: const BoxConstraints(maxWidth: 150, maxHeight: 150),
+                                  child: AspectRatio(
+                                    aspectRatio: 1,
+                                    child: OutlinedButton(
+                                      onPressed: _matchPeople,
+                                      style: OutlinedButton.styleFrom(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(12),
+                                        ),
+                                      ),
+                                      child: const FittedBox(
+                                        fit: BoxFit.scaleDown,
+                                        child: Padding(
+                                          padding: EdgeInsets.all(8.0),
+                                          child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              Icon(Icons.coffee, size: 48),
+                                              SizedBox(height: 4),
+                                              Text('Match'),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        if (_matchedGroups.isNotEmpty) ...[
+                          const SizedBox(height: 24),
+                          const Text(
+                            'Matched Groups:',
+                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                          ),
+                          const SizedBox(height: 12),
+                          Flexible(
+                            child: LayoutBuilder(
+                              builder: (context, constraints) {
+                                final nameWidth = (constraints.maxWidth - 80) / 3;
+                                return ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: _matchedGroups.length,
+                                  itemBuilder: (context, index) {
+                                    final group = _matchedGroups[index];
+                                    return Padding(
+                                      padding: const EdgeInsets.symmetric(vertical: 4.0),
+                                      child: Row(
+                                        children: [
+                                          SizedBox(
+                                            width: nameWidth,
+                                            child: Text(
+                                              group[0].name,
+                                              style: const TextStyle(fontSize: 14),
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            width: 40,
+                                            child: Center(child: Text('↔', style: TextStyle(fontSize: 14))),
+                                          ),
+                                          SizedBox(
+                                            width: nameWidth,
+                                            child: Text(
+                                              group.length >= 2 ? group[1].name : '',
+                                              style: const TextStyle(fontSize: 14),
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                          if (group.length == 3) ...[
+                                            const SizedBox(
+                                              width: 40,
+                                              child: Center(child: Text('↔', style: TextStyle(fontSize: 14))),
+                                            ),
+                                            SizedBox(
+                                              width: nameWidth,
+                                              child: Text(
+                                                group[2].name,
+                                                style: const TextStyle(fontSize: 14),
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ),
+                                          ],
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                          ),
+                          const SizedBox(height: 12),
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: SizedBox(
+                              width: 40,
+                              height: 40,
+                              child: Tooltip(
+                                message: 'Copy to Clipboard',
+                                child: OutlinedButton(
+                                  onPressed: _copyMatchesToClipboard,
+                                  style: OutlinedButton.styleFrom(
+                                    padding: EdgeInsets.zero,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                  child: const Icon(Icons.copy, size: 20),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),
