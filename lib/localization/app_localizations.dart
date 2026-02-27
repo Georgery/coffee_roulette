@@ -90,6 +90,22 @@ class AppLocalizations {
       AppLocale.en: 'Delete',
       AppLocale.de: 'Löschen',
     },
+    'groupSize': {
+      AppLocale.en: 'Group Size',
+      AppLocale.de: 'Gruppengröße',
+    },
+    'group': {
+      AppLocale.en: 'Group',
+      AppLocale.de: 'Gruppe',
+    },
+    'groupSizeTooLarge': {
+      AppLocale.en: 'That group size doesn\'t make any sense, but hey... whatever floats your boat.',
+      AppLocale.de: 'Die Gruppengröße ist Quatsch... aber naja, sind ja Deine Gruppen.',
+    },
+    'groupSizeAdjusted': {
+      AppLocale.en: 'Not enough people for multiple groups',
+      AppLocale.de: 'Nicht genug Leute für mehrere Gruppen',
+    },
   };
 
   String get appTitle             => _translations['appTitle']![locale]!;
@@ -113,4 +129,8 @@ class AppLocalizations {
   String get add                  => _translations['add']![locale]!;
   String get edit                 => _translations['edit']![locale]!;
   String get delete               => _translations['delete']![locale]!;
+  String get groupSize            => _translations['groupSize']![locale]!;
+  String get group                => _translations['group']![locale]!;
+  String get groupSizeTooLarge    => _translations['groupSizeTooLarge']![locale]!;
+  String get groupSizeAdjusted    => _translations['groupSizeAdjusted']![locale]!;
 }

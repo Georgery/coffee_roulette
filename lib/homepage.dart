@@ -29,6 +29,7 @@ class _MyHomePageState extends State<MyHomePage> {
   List<Person> _people = [];
   List<List<Person>> _matchedGroups = [];
   final _addButtonFocusNode = FocusNode();
+  int _groupSize = 2;
 
   @override
   void initState() {
@@ -78,23 +79,27 @@ class _MyHomePageState extends State<MyHomePage> {
   void _matchPeople() {
     if (_people.isEmpty) return;
 
+    final l10n = LocaleProvider.of(context).l10n;
+    final n = _people.length;
+
+    if (n <= _groupSize) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(l10n.groupSizeTooLarge)),
+      );
+    } else if (n < _groupSize * 2) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(l10n.groupSizeAdjusted)),
+      );
+    }
+
     final random = Random();
     final shuffled = List<Person>.from(_people)..shuffle(random);
-    final groups = <List<Person>>[];
 
-    int i = 0;
-    while (i < shuffled.length) {
-      final remaining = shuffled.length - i;
-      if (remaining == 3) {
-        groups.add([shuffled[i], shuffled[i + 1], shuffled[i + 2]]);
-        i += 3;
-      } else if (remaining >= 2) {
-        groups.add([shuffled[i], shuffled[i + 1]]);
-        i += 2;
-      } else {
-        groups.add([shuffled[i]]);
-        i += 1;
-      }
+    final numGroups = (n / _groupSize).ceil();
+    final groups = List.generate(numGroups, (_) => <Person>[]);
+
+    for (int i = 0; i < n; i++) {
+      groups[i % numGroups].add(shuffled[i]);
     }
 
     setState(() {
@@ -108,15 +113,16 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   String _getMatchedGroupsText() {
-    final maxLen = _maxNameLength;
+    final l10n = LocaleProvider.of(context).l10n;
     final buffer = StringBuffer();
-    for (final group in _matchedGroups) {
-      if (group.length == 2) {
-        buffer.writeln('${group[0].name.padRight(maxLen)} ↔ ${group[1].name}');
-      } else if (group.length == 3) {
-        buffer.writeln('${group[0].name.padRight(maxLen)} ↔ ${group[1].name.padRight(maxLen)} ↔ ${group[2].name}');
-      } else if (group.length == 1) {
-        buffer.writeln(group[0].name);
+    for (int i = 0; i < _matchedGroups.length; i++) {
+      final group = _matchedGroups[i];
+      buffer.writeln('${l10n.group} ${i + 1}');
+      for (final person in group) {
+        buffer.writeln('  ${person.name}');
+      }
+      if (i < _matchedGroups.length - 1) {
+        buffer.writeln();
       }
     }
     return buffer.toString().trim();
@@ -491,7 +497,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       children: [
                         if (_people.isNotEmpty)
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Flexible(
                                 child: ConstrainedBox(
@@ -523,6 +530,46 @@ class _MyHomePageState extends State<MyHomePage> {
                                   ),
                                 ),
                               ),
+                              SizedBox(
+                                width: 120,
+                                child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    l10n.groupSize,
+                                    style: const TextStyle(fontSize: 12),
+                                  ),
+                                  Transform.translate(
+                                    offset: const Offset(0, -16),
+                                    child: SizedBox(
+                                      width: 120,
+                                      child: DropdownButton<int>(
+                                        value: _groupSize,
+                                        focusColor: Colors.transparent,
+                                        isExpanded: true,
+                                        items: [2, 3, 4, 5]
+                                            .map((size) => DropdownMenuItem(
+                                                  value: size,
+                                                  child: Align(
+                                                    alignment: Alignment.centerRight,
+                                                    child: Text('$size', style: const TextStyle(fontSize: 14)),
+                                                  ),
+                                                ))
+                                            .toList(),
+                                        onChanged: (value) {
+                                          if (value != null) {
+                                            setState(() {
+                                              _groupSize = value;
+                                            });
+                                          }
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              ),
                             ],
                           ),
                         if (_matchedGroups.isNotEmpty) ...[
@@ -534,56 +581,31 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                           const SizedBox(height: 12),
                           Flexible(
-                            child: LayoutBuilder(
-                              builder: (context, constraints) {
-                                final nameWidth = (constraints.maxWidth - 80) / 3;
-                                return ListView.builder(
-                                  shrinkWrap: true,
-                                  itemCount: _matchedGroups.length,
-                                  itemBuilder: (context, index) {
-                                    final group = _matchedGroups[index];
-                                    return Padding(
-                                      padding: const EdgeInsets.symmetric(vertical: 4.0),
-                                      child: Row(
-                                        children: [
-                                          SizedBox(
-                                            width: nameWidth,
-                                            child: Text(
-                                              group[0].name,
-                                              style: const TextStyle(fontSize: 14),
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            width: 40,
-                                            child: Center(child: Text('↔', style: TextStyle(fontSize: 14))),
-                                          ),
-                                          SizedBox(
-                                            width: nameWidth,
-                                            child: Text(
-                                              group.length >= 2 ? group[1].name : '',
-                                              style: const TextStyle(fontSize: 14),
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                          ),
-                                          if (group.length == 3) ...[
-                                            const SizedBox(
-                                              width: 40,
-                                              child: Center(child: Text('↔', style: TextStyle(fontSize: 14))),
-                                            ),
-                                            SizedBox(
-                                              width: nameWidth,
-                                              child: Text(
-                                                group[2].name,
-                                                style: const TextStyle(fontSize: 14),
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
-                                            ),
-                                          ],
-                                        ],
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: _matchedGroups.length,
+                              itemBuilder: (context, index) {
+                                final group = _matchedGroups[index];
+                                return Padding(
+                                  padding: const EdgeInsets.only(bottom: 16.0),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        '${l10n.group} ${index + 1}',
+                                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
                                       ),
-                                    );
-                                  },
+                                      const SizedBox(height: 4),
+                                      for (final person in group)
+                                        Padding(
+                                          padding: const EdgeInsets.only(left: 16.0, top: 2.0),
+                                          child: Text(
+                                            person.name,
+                                            style: const TextStyle(fontSize: 14),
+                                          ),
+                                        ),
+                                    ],
+                                  ),
                                 );
                               },
                             ),
