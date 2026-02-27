@@ -34,5 +34,13 @@
 </head>
 <body>
   <script src="flutter_bootstrap.js" async></script>
+  <script>
+    // Allow browser zoom with Ctrl+mouse wheel (Flutter intercepts wheel events by default)
+    window.addEventListener('wheel', (e) => {
+      if (e.ctrlKey) {
+        e.stopImmediatePropagation();
+      }
+    }, { capture: true });
+  </script>
 </body>
 </html>

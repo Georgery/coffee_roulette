@@ -303,6 +303,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 fontWeight: FontWeight.bold,
               ),
             ),
+            const SizedBox(height: 4),
             Text(
               l10n.appSubtitle,
               style: TextStyle(
