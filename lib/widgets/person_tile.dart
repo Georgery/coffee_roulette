@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../l10n/locale_provider.dart';
 import '../person.dart';
 
 class PersonTile extends StatelessWidget {
@@ -15,6 +16,7 @@ class PersonTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = LocaleProvider.of(context).l10n;
     return Card(
       child: ListTile(
         title: Text(person.name),
@@ -25,12 +27,12 @@ class PersonTile extends StatelessWidget {
             IconButton(
               icon: const Icon(Icons.edit, size: 20),
               onPressed: onEdit,
-              tooltip: 'Edit',
+              tooltip: l10n.edit,
             ),
             IconButton(
               icon: const Icon(Icons.delete, size: 20),
               onPressed: onDelete,
-              tooltip: 'Delete',
+              tooltip: l10n.delete,
             ),
           ],
         ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:desktop_drop/desktop_drop.dart';
+import '../l10n/locale_provider.dart';
 
 class FileDropZone extends StatefulWidget {
   final void Function(String content) onFileDropped;
@@ -20,6 +21,7 @@ class _FileDropZoneState extends State<FileDropZone> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = LocaleProvider.of(context).l10n;
     return DropTarget(
       onDragEntered: (_) => setState(() => _isDragging = true),
       onDragExited: (_) => setState(() => _isDragging = false),
@@ -53,7 +55,7 @@ class _FileDropZoneState extends State<FileDropZone> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      _isDragging ? '' : 'Drop File to',
+                      _isDragging ? '' : l10n.dropFileTo,
                       style: TextStyle(
                         color: _isDragging ? Colors.blue : Colors.grey,
                         fontSize: 12,
@@ -66,10 +68,11 @@ class _FileDropZoneState extends State<FileDropZone> {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      _isDragging ? 'Drop file here' : 'Add Names',
+                      _isDragging ? l10n.dropFileHere : l10n.addNames,
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         color: _isDragging ? Colors.blue : Colors.grey,
-                        fontSize: 12,
+                        fontSize: 11,
                       ),
                     ),
                   ],

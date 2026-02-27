@@ -3,12 +3,14 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'l10n/app_localizations.dart';
+import 'l10n/locale_provider.dart';
 import 'widgets/file_drop_zone.dart';
 import 'widgets/person_tile.dart';
 import 'person.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+  const MyHomePage({super.key});
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -18,8 +20,6 @@ class MyHomePage extends StatefulWidget {
   // case the title) provided by the parent (in this case the App widget) and
   // used by the build method of the State. Fields in a Widget subclass are
   // always marked "final".
-
-  final String title;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -128,20 +128,23 @@ class _MyHomePageState extends State<MyHomePage> {
         .map((p) => p.email!)
         .join(', ');
     Clipboard.setData(ClipboardData(text: emails));
+    final l10n = LocaleProvider.of(context).l10n;
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Emails copied to clipboard')),
+      SnackBar(content: Text(l10n.emailsCopied)),
     );
   }
 
   void _copyMatchesToClipboard() {
     final text = _getMatchedGroupsText();
     Clipboard.setData(ClipboardData(text: text));
+    final l10n = LocaleProvider.of(context).l10n;
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Matches copied to clipboard!')),
+      SnackBar(content: Text(l10n.matchesCopied)),
     );
   }
 
   void _editPerson(int index) {
+    final l10n = LocaleProvider.of(context).l10n;
     final person = _people[index];
     final nameController = TextEditingController(text: person.name);
     final emailController = TextEditingController(text: person.email ?? '');
@@ -166,7 +169,7 @@ class _MyHomePageState extends State<MyHomePage> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Edit Person'),
+        title: Text(l10n.editPerson),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -174,7 +177,7 @@ class _MyHomePageState extends State<MyHomePage> {
               controller: nameController,
               focusNode: nameFocusNode,
               autofocus: true,
-              decoration: const InputDecoration(labelText: 'Name'),
+              decoration: InputDecoration(labelText: l10n.name),
               textInputAction: TextInputAction.next,
               onSubmitted: (_) => emailFocusNode.requestFocus(),
             ),
@@ -182,7 +185,7 @@ class _MyHomePageState extends State<MyHomePage> {
             TextField(
               controller: emailController,
               focusNode: emailFocusNode,
-              decoration: const InputDecoration(labelText: 'Email'),
+              decoration: InputDecoration(labelText: l10n.email),
               textInputAction: TextInputAction.next,
               onSubmitted: (_) => saveFocusNode.requestFocus(),
             ),
@@ -191,12 +194,12 @@ class _MyHomePageState extends State<MyHomePage> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
+            child: Text(l10n.cancel),
           ),
           TextButton(
             focusNode: saveFocusNode,
             onPressed: saveAndClose,
-            child: const Text('Save'),
+            child: Text(l10n.save),
           ),
         ],
       ),
@@ -204,6 +207,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _addPerson() {
+    final l10n = LocaleProvider.of(context).l10n;
     final nameController = TextEditingController();
     final emailController = TextEditingController();
     final emailFocusNode = FocusNode();
@@ -227,14 +231,14 @@ class _MyHomePageState extends State<MyHomePage> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Add Person'),
+        title: Text(l10n.addPerson),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             TextField(
               controller: nameController,
               autofocus: true,
-              decoration: const InputDecoration(labelText: 'Name'),
+              decoration: InputDecoration(labelText: l10n.name),
               textInputAction: TextInputAction.next,
               onSubmitted: (_) => emailFocusNode.requestFocus(),
             ),
@@ -242,7 +246,7 @@ class _MyHomePageState extends State<MyHomePage> {
             TextField(
               controller: emailController,
               focusNode: emailFocusNode,
-              decoration: const InputDecoration(labelText: 'Email'),
+              decoration: InputDecoration(labelText: l10n.email),
               textInputAction: TextInputAction.next,
               onSubmitted: (_) => addFocusNode.requestFocus(),
             ),
@@ -251,12 +255,12 @@ class _MyHomePageState extends State<MyHomePage> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
+            child: Text(l10n.cancel),
           ),
           TextButton(
             focusNode: addFocusNode,
             onPressed: addAndClose,
-            child: const Text('Add'),
+            child: Text(l10n.add),
           ),
         ],
       ),
@@ -271,6 +275,9 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
+    final localeProvider = LocaleProvider.of(context);
+    final l10n = localeProvider.l10n;
+
     return Scaffold(
       appBar: AppBar(
         // TRY THIS: Try changing the color here to a specific color (to
@@ -279,7 +286,28 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        title: Text(l10n.appTitle),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 16.0),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text('EN'),
+                Transform.scale(
+                  scale: 0.6,
+                  child: Switch(
+                    value: localeProvider.locale == AppLocale.de,
+                    onChanged: (value) {
+                      localeProvider.setLocale(value ? AppLocale.de : AppLocale.en);
+                    },
+                  ),
+                ),
+                const Text('DE'),
+              ],
+            ),
+          ),
+        ],
       ),
       body: Center(
         child: ConstrainedBox(
@@ -321,16 +349,16 @@ class _MyHomePageState extends State<MyHomePage> {
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                               ),
-                              child: const FittedBox(
+                              child: FittedBox(
                                 fit: BoxFit.scaleDown,
                                 child: Padding(
-                                  padding: EdgeInsets.all(8.0),
+                                  padding: const EdgeInsets.all(8.0),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Icon(Icons.delete, size: 48),
-                                      SizedBox(height: 4),
-                                      Text('Delete All'),
+                                      const Icon(Icons.delete, size: 48),
+                                      const SizedBox(height: 4),
+                                      Text(l10n.deleteAll),
                                     ],
                                   ),
                                 ),
@@ -370,7 +398,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     width: 40,
                                     height: 40,
                                     child: Tooltip(
-                                      message: 'Copy Emails\n...in case you want to paste them into your email program',
+                                      message: l10n.copyEmailsTooltip,
                                       child: OutlinedButton(
                                         onPressed: _people.any((p) => p.email != null && p.email!.isNotEmpty)
                                             ? _copyEmailsToClipboard
@@ -397,7 +425,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     width: 40,
                                     height: 40,
                                     child: Tooltip(
-                                      message: 'Download the List\n...you know, so you can just drop it next time',
+                                      message: l10n.downloadListTooltip,
                                       child: OutlinedButton(
                                         onPressed: _people.isEmpty ? null : _downloadPeople,
                                         style: OutlinedButton.styleFrom(
@@ -415,7 +443,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     width: 40,
                                     height: 40,
                                     child: Tooltip(
-                                      message: 'Add Person',
+                                      message: l10n.addPerson,
                                       child: OutlinedButton(
                                         focusNode: _addButtonFocusNode,
                                         onPressed: _addPerson,
@@ -476,16 +504,16 @@ class _MyHomePageState extends State<MyHomePage> {
                                           borderRadius: BorderRadius.circular(12),
                                         ),
                                       ),
-                                      child: const FittedBox(
+                                      child: FittedBox(
                                         fit: BoxFit.scaleDown,
                                         child: Padding(
-                                          padding: EdgeInsets.all(8.0),
+                                          padding: const EdgeInsets.all(8.0),
                                           child: Column(
                                             mainAxisAlignment: MainAxisAlignment.center,
                                             children: [
-                                              Icon(Icons.coffee, size: 48),
-                                              SizedBox(height: 4),
-                                              Text('Match'),
+                                              const Icon(Icons.coffee, size: 48),
+                                              const SizedBox(height: 4),
+                                              Text(l10n.match),
                                             ],
                                           ),
                                         ),
@@ -498,10 +526,10 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                         if (_matchedGroups.isNotEmpty) ...[
                           const SizedBox(height: 24),
-                          const Text(
-                            'Matched Groups',
+                          Text(
+                            l10n.matchedGroups,
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                           ),
                           const SizedBox(height: 12),
                           Flexible(
@@ -566,7 +594,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               width: 40,
                               height: 40,
                               child: Tooltip(
-                                message: 'Copy to Clipboard',
+                                message: l10n.copyToClipboard,
                                 child: OutlinedButton(
                                   onPressed: _copyMatchesToClipboard,
                                   style: OutlinedButton.styleFrom(
