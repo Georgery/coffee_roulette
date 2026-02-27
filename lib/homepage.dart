@@ -122,6 +122,17 @@ class _MyHomePageState extends State<MyHomePage> {
     return buffer.toString().trim();
   }
 
+  void _copyEmailsToClipboard() {
+    final emails = _people
+        .where((p) => p.email != null && p.email!.isNotEmpty)
+        .map((p) => p.email!)
+        .join(', ');
+    Clipboard.setData(ClipboardData(text: emails));
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Emails copied to clipboard')),
+    );
+  }
+
   void _copyMatchesToClipboard() {
     final text = _getMatchedGroupsText();
     Clipboard.setData(ClipboardData(text: text));
@@ -352,9 +363,54 @@ class _MyHomePageState extends State<MyHomePage> {
                             alignment: Alignment.centerRight,
                             child: Padding(
                               padding: const EdgeInsets.only(top: 8.0),
-                              child: Column(
+                              child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
+                                  SizedBox(
+                                    width: 40,
+                                    height: 40,
+                                    child: Tooltip(
+                                      message: 'Copy Emails\n...in case you want to paste them into your email program',
+                                      child: OutlinedButton(
+                                        onPressed: _people.any((p) => p.email != null && p.email!.isNotEmpty)
+                                            ? _copyEmailsToClipboard
+                                            : null,
+                                        style: OutlinedButton.styleFrom(
+                                          padding: EdgeInsets.zero,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(8),
+                                          ),
+                                        ),
+                                        child: const Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Icon(Icons.alternate_email, size: 14),
+                                            SizedBox(width: 2),
+                                            Icon(Icons.copy, size: 14),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  SizedBox(
+                                    width: 40,
+                                    height: 40,
+                                    child: Tooltip(
+                                      message: 'Download the List\n...you know, so you can just drop it next time',
+                                      child: OutlinedButton(
+                                        onPressed: _people.isEmpty ? null : _downloadPeople,
+                                        style: OutlinedButton.styleFrom(
+                                          padding: EdgeInsets.zero,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(8),
+                                          ),
+                                        ),
+                                        child: const Icon(Icons.download, size: 20),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
                                   SizedBox(
                                     width: 40,
                                     height: 40,
@@ -370,24 +426,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                           ),
                                         ),
                                         child: const Icon(Icons.add, size: 20),
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 8),
-                                  SizedBox(
-                                    width: 40,
-                                    height: 40,
-                                    child: Tooltip(
-                                      message: 'Download List',
-                                      child: OutlinedButton(
-                                        onPressed: _people.isEmpty ? null : _downloadPeople,
-                                        style: OutlinedButton.styleFrom(
-                                          padding: EdgeInsets.zero,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(8),
-                                          ),
-                                        ),
-                                        child: const Icon(Icons.download, size: 20),
                                       ),
                                     ),
                                   ),
