@@ -14,8 +14,9 @@ class MenuItem {
 
 class SideMenu extends StatefulWidget {
   final List<MenuItem> items;
+  final List<MenuItem> bottomItems;
 
-  const SideMenu({super.key, required this.items});
+  const SideMenu({super.key, required this.items, this.bottomItems = const []});
 
   @override
   State<SideMenu> createState() => _SideMenuState();
@@ -46,7 +47,8 @@ class _SideMenuState extends State<SideMenu> {
           ),
           Positioned(
             left: position.dx + size.width + 8,
-            top: position.dy,
+            top: index < 0 ? null : position.dy,
+            bottom: index < 0 ? MediaQuery.of(context).size.height - position.dy - size.height : null,
             child: Material(
               elevation: 8,
               borderRadius: BorderRadius.circular(8),
@@ -65,7 +67,7 @@ class _SideMenuState extends State<SideMenu> {
                 ),
                 child: SingleChildScrollView(
                   child: MarkdownBody(
-                    data: widget.items[index].content,
+                    data: index < 0 ? widget.bottomItems[-(index + 1)].content : widget.items[index].content,
                     styleSheet: MarkdownStyleSheet(
                       p: const TextStyle(fontSize: 14),
                     ),
@@ -122,6 +124,18 @@ class _SideMenuState extends State<SideMenu> {
               onTap: (key) => _showPopup(context, i, key),
             ),
             if (i < widget.items.length - 1) const SizedBox(height: 12),
+          ],
+          if (widget.bottomItems.isNotEmpty) ...[
+            const Spacer(),
+            for (int i = 0; i < widget.bottomItems.length; i++) ...[
+              _MenuItemButton(
+                item: widget.bottomItems[i],
+                isActive: _activeIndex == -(i + 1),
+                onTap: (key) => _showPopup(context, -(i + 1), key),
+              ),
+              if (i < widget.bottomItems.length - 1) const SizedBox(height: 12),
+            ],
+            const SizedBox(height: 16),
           ],
         ],
       ),

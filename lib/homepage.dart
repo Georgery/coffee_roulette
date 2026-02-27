@@ -4,6 +4,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'localization/app_localizations.dart';
 import 'localization/locale_provider.dart';
 import 'widgets/file_drop_zone.dart';
@@ -285,13 +286,32 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: 130,
         // TRY THIS: Try changing the color here to a specific color (to
         // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
         // change color while the other colors stay the same.
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text(l10n.appTitle),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              l10n.appTitle,
+              style: GoogleFonts.lobster(
+                fontSize: 56,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Text(
+              l10n.appSubtitle,
+              style: TextStyle(
+                fontSize: 12,
+                color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+              ),
+            ),
+          ],
+        ),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16.0),
@@ -329,6 +349,12 @@ class _MyHomePageState extends State<MyHomePage> {
               MenuItem(
                 title: l10n.menuDataSecurity,
                 content: l10n.menuDataSecurityContent,
+              ),
+            ],
+            bottomItems: [
+              MenuItem(
+                title: l10n.menuCredits,
+                content: l10n.menuCreditsContent,
               ),
             ],
           ),

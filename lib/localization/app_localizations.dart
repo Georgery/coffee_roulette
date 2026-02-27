@@ -10,6 +10,10 @@ class AppLocalizations {
       AppLocale.en: 'Coffee Roulette',
       AppLocale.de: 'Coffee Roulette',
     },
+    'appSubtitle': {
+      AppLocale.en: 'Connect people randomly, so they can meet and get to know each other.',
+      AppLocale.de: 'Verbinde Leute zufällig, damit sie sich kennenlernen.',
+    },
     'deleteAll': {
       AppLocale.en: 'Delete All',
       AppLocale.de: 'Alle löschen',
@@ -130,9 +134,18 @@ class AppLocalizations {
       AppLocale.en: 'You\'re not. **The data never leaves your machine.** This is a so-called "static web app". Everything happens on your local machine. No data is sent to any server. You could even turn off your internet connection while using it.\n\nStill sceptical? - This is an open source project. Feel free to check the source code on [https://github.com/Georgery/coffee_roulette](https://github.com/Georgery/coffee_roulette).',
       AppLocale.de: 'Tust Du nicht. **Die Daten verlassen Dein Gerät nicht.** Dies ist eine statische Web-App. Alles passiert auf Deinem Gerät, keinerlei Daten werden an irgendeinen Server geschickt. Du kannst sogar Deine Internetverbindung kappen, wenn Du willst.\n\nImmernoch skeptisch? - Das ist ein Open-Source Projekt. Du kannst Dir den Quellcode anschauen, unter [https://github.com/Georgery/coffee_roulette](https://github.com/Georgery/coffee_roulette).',
     },
+    'menuCredits': {
+      AppLocale.en: 'Who\'s got nothing better to do, than to build something like this?',
+      AppLocale.de: 'Wer hat denn bitte nichts besseres zu tun, als so\'ne App zu bauen?',
+    },
+    'menuCreditsContent': {
+      AppLocale.en: 'Created by [Georgery](https://github.com/Georgery).\n\n Source code available on [GitHub](https://github.com/Georgery/coffee_roulette).',
+      AppLocale.de: 'Erstellt von [Georgery](https://github.com/Georgery).\n\n Quellcode auf [GitHub](https://github.com/Georgery/coffee_roulette).',
+    },
   };
 
   String get appTitle             => _translations['appTitle']![locale]!;
+  String get appSubtitle          => _translations['appSubtitle']![locale]!;
   String get deleteAll            => _translations['deleteAll']![locale]!;
   String get dropFileTo           => _translations['dropFileTo']![locale]!;
   String get addNames             => _translations['addNames']![locale]!;
@@ -163,4 +176,6 @@ class AppLocalizations {
   String get menuHowToContent     => _translations['menuHowToContent']![locale]!;
   String get menuDataSecurity     => _translations['menuDataSecurity']![locale]!;
   String get menuDataSecurityContent => _translations['menuDataSecurityContent']![locale]!;
+  String get menuCredits          => _translations['menuCredits']![locale]!;
+  String get menuCreditsContent   => _translations['menuCreditsContent']![locale]!;
 }
