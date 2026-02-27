@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:web/web.dart' as web;
 
 class MenuItem {
   final String title;
@@ -37,10 +39,9 @@ class _SideMenuState extends State<SideMenu> {
       builder: (context) => Stack(
         children: [
           Positioned.fill(
-            child: GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onTap: _hidePopup,
-              child: Container(color: Colors.transparent),
+            child: Listener(
+              behavior: HitTestBehavior.translucent,
+              onPointerDown: (_) => _hidePopup(),
             ),
           ),
           Positioned(
@@ -63,9 +64,16 @@ class _SideMenuState extends State<SideMenu> {
                   ),
                 ),
                 child: SingleChildScrollView(
-                  child: SelectableText(
-                    widget.items[index].content,
-                    style: const TextStyle(fontSize: 14),
+                  child: MarkdownBody(
+                    data: widget.items[index].content,
+                    styleSheet: MarkdownStyleSheet(
+                      p: const TextStyle(fontSize: 14),
+                    ),
+                    onTapLink: (text, href, title) {
+                      if (href != null) {
+                        web.window.open(href, '_blank');
+                      }
+                    },
                   ),
                 ),
               ),
@@ -95,7 +103,7 @@ class _SideMenuState extends State<SideMenu> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 140,
+      width: 250,
       decoration: BoxDecoration(
         border: Border(
           right: BorderSide(
@@ -106,13 +114,15 @@ class _SideMenuState extends State<SideMenu> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const SizedBox(height: 16),
-          for (int i = 0; i < widget.items.length; i++)
+          const SizedBox(height: 28),
+          for (int i = 0; i < widget.items.length; i++) ...[
             _MenuItemButton(
               item: widget.items[i],
               isActive: _activeIndex == i,
               onTap: (key) => _showPopup(context, i, key),
             ),
+            if (i < widget.items.length - 1) const SizedBox(height: 12),
+          ],
         ],
       ),
     );
@@ -150,13 +160,19 @@ class _MenuItemButtonState extends State<_MenuItemButton> {
           backgroundColor: widget.isActive
               ? Theme.of(context).colorScheme.primaryContainer
               : null,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
         ),
-        child: Text(
-          widget.item.title,
-          style: TextStyle(
-            color: widget.isActive
-                ? Theme.of(context).colorScheme.primary
-                : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+        child: MarkdownBody(
+          data: widget.item.title,
+          softLineBreak: true,
+          styleSheet: MarkdownStyleSheet(
+            p: TextStyle(
+              color: widget.isActive
+                  ? Theme.of(context).colorScheme.primary
+                  : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+            ),
           ),
         ),
       ),

@@ -8,7 +8,7 @@ class AppLocalizations {
   static const Map<String, Map<AppLocale, String>> _translations = {
     'appTitle': {
       AppLocale.en: 'Coffee Roulette',
-      AppLocale.de: 'Coffee-Roulette',
+      AppLocale.de: 'Coffee Roulette',
     },
     'deleteAll': {
       AppLocale.en: 'Delete All',
@@ -107,28 +107,28 @@ class AppLocalizations {
       AppLocale.de: 'Nicht genug Leute für mehrere Gruppen',
     },
     'menuAbout': {
-      AppLocale.en: 'About',
-      AppLocale.de: 'Über',
+      AppLocale.en: '**What do I need this for, again?**',
+      AppLocale.de: '**Wofür brauch ich das hier nochmal?**',
     },
     'menuAboutContent': {
-      AppLocale.en: 'Coffee Roulette helps you randomly match people into groups for coffee meetings or team activities.\n\nSimply add participants, set your preferred group size, and click Match to create random groups.',
-      AppLocale.de: 'Coffee Roulette hilft dir, Leute zufällig in Gruppen für Kaffeepausen oder Teamaktivitäten einzuteilen.\n\nFüge einfach Teilnehmer hinzu, wähle die gewünschte Gruppengröße und klicke auf Matchen!',
+      AppLocale.en: 'You\'re in an organization. Not everybody knows each other. But maybe they should...\n\n**Connect people in randomized groups** or pairs, so they can meet and get to know each other. Once a week you can build and let them know about the random group composition. Only thing left is that they set up a call or meeting.\n\nThis fosters knowledge sharing and team building and connects people who otherwise wouldn\'t meet.',
+      AppLocale.de: 'Du bist in einer Organisation? Nicht alle kennen sich... aber sollten sie vielleicht?\n\n**Verbinde Leute in zufälligen Gruppen** oder Paaren. Sie können sich dann beim Kaffee kennenlernen. Jede Woche werden neue Gruppen ausgelost. Sie müssen sich dann nur noch treffen - online oder offline.\n\nDas fördert das Wissensaustausch und Teambuilding und Kollaboration.',
     },
-    'menuHowToUse': {
-      AppLocale.en: 'How to use',
-      AppLocale.de: 'Anleitung',
+    'menuHowTo': {
+      AppLocale.en: '**And, so, how do I use this?**',
+      AppLocale.de: '**Und wie geht das jetzt hier?**',
     },
-    'menuHowToUseContent': {
-      AppLocale.en: 'How to use:\n\n1. Add people manually using the + button\n2. Or drag & drop a text file with names\n3. Each line should contain: Name (Email)\n4. Select your desired group size\n5. Click the coffee icon to match!',
-      AppLocale.de: 'So geht\'s:\n\n1. Personen manuell mit dem + Button hinzufügen\n2. Oder eine Textdatei mit Namen per Drag & Drop einfügen\n3. Jede Zeile sollte enthalten: Name (E-Mail)\n4. Gewünschte Gruppengröße auswählen\n5. Auf das Kaffee-Symbol klicken zum Matchen!',
+    'menuHowToContent': {
+      AppLocale.en: '- Enter the names of people you want to connect.\n - Match them into random groups.\n - Notify them about their groupings - potentially using the emails you added.\n - Create a file with the names, that you can just drag-and-drop next time.',
+      AppLocale.de: '- Gib die Namen der Leute ein, die Du verbinden willst.\n - Erstelle zufällige Gruppen.\n - Informiere die Leute über ihre Gruppe - potenziell mit den E-Mail-Adressen, die Du hinzugefügt hast.\n - Erstelle eine Datei mit den Namen - beim nächsten Mal kannst Du sie einfach per drag-and-drop einfügen.',
     },
-    'menuTips': {
-      AppLocale.en: 'Tips',
-      AppLocale.de: 'Tipps',
+    'menuDataSecurity': {
+      AppLocale.en: '**I\'m outraged!**\nI will not send my data to some evil, capitalist American tech giant. (@#\$%!)',
+      AppLocale.de: '**Ich bin empört!**\nAuf keinen Fall sende ich meine Daten an fiese, kapitalistische, amerikanische Tech-Giganten. (@#\$%!)',
     },
-    'menuTipsContent': {
-      AppLocale.en: 'Tips:\n\n• You can edit any person by clicking on their tile\n• Download your list to save it for later\n• Copy all emails with one click\n• Copy matched groups to share them easily',
-      AppLocale.de: 'Tipps:\n\n• Klicke auf eine Person, um sie zu bearbeiten\n• Lade deine Liste herunter, um sie später wiederzuverwenden\n• Kopiere alle E-Mails mit einem Klick\n• Kopiere die Gruppen, um sie einfach zu teilen',
+    'menuDataSecurityContent': {
+      AppLocale.en: 'You\'re not. **The data never leaves your machine.** This is a so-called "static web app". Everything happens on your local machine. No data is sent to any server. You could even turn off your internet connection while using it.\n\nStill sceptical? - This is an open source project. Feel free to check the source code on [https://github.com/Georgery/coffee_roulette](https://github.com/Georgery/coffee_roulette).',
+      AppLocale.de: 'Tust Du nicht. **Die Daten verlassen Dein Gerät nicht.** Dies ist eine statische Web-App. Alles passiert auf Deinem Gerät, keinerlei Daten werden an irgendeinen Server geschickt. Du kannst sogar Deine Internetverbindung kappen, wenn Du willst.\n\nImmernoch skeptisch? - Das ist ein Open-Source Projekt. Du kannst Dir den Quellcode anschauen, unter [https://github.com/Georgery/coffee_roulette](https://github.com/Georgery/coffee_roulette).',
     },
   };
 
@@ -159,8 +159,8 @@ class AppLocalizations {
   String get groupSizeAdjusted    => _translations['groupSizeAdjusted']![locale]!;
   String get menuAbout            => _translations['menuAbout']![locale]!;
   String get menuAboutContent     => _translations['menuAboutContent']![locale]!;
-  String get menuHowToUse         => _translations['menuHowToUse']![locale]!;
-  String get menuHowToUseContent  => _translations['menuHowToUseContent']![locale]!;
-  String get menuTips             => _translations['menuTips']![locale]!;
-  String get menuTipsContent      => _translations['menuTipsContent']![locale]!;
+  String get menuHowTo            => _translations['menuHowTo']![locale]!;
+  String get menuHowToContent     => _translations['menuHowToContent']![locale]!;
+  String get menuDataSecurity     => _translations['menuDataSecurity']![locale]!;
+  String get menuDataSecurityContent => _translations['menuDataSecurityContent']![locale]!;
 }

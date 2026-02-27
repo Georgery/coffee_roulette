@@ -323,12 +323,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 content: l10n.menuAboutContent,
               ),
               MenuItem(
-                title: l10n.menuHowToUse,
-                content: l10n.menuHowToUseContent,
+                title: l10n.menuHowTo,
+                content: l10n.menuHowToContent,
               ),
               MenuItem(
-                title: l10n.menuTips,
-                content: l10n.menuTipsContent,
+                title: l10n.menuDataSecurity,
+                content: l10n.menuDataSecurityContent,
               ),
             ],
           ),

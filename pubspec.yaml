@@ -36,6 +36,8 @@ dependencies:
   cupertino_icons: ^1.0.8
   desktop_drop: ^0.7.0
   web: ^1.1.1
+  flutter_markdown: ^0.7.4
+  url_launcher: ^6.2.0
 
 dev_dependencies:
   flutter_test:

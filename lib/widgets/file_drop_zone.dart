@@ -44,8 +44,8 @@ class _FileDropZoneState extends State<FileDropZone> {
               ),
               borderRadius: BorderRadius.circular(12),
               color: _isDragging
-                  ? Colors.blue.withOpacity(0.1)
-                  : Colors.grey.withOpacity(0.05),
+                  ? Colors.blue.withValues(alpha: 0.1)
+                  : Colors.grey.withValues(alpha: 0.05),
             ),
             child: FittedBox(
               fit: BoxFit.scaleDown,

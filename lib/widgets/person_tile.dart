@@ -19,8 +19,18 @@ class PersonTile extends StatelessWidget {
     final l10n = LocaleProvider.of(context).l10n;
     return Card(
       child: ListTile(
-        title: Text(person.name),
-        subtitle: person.email != null ? Text(person.email!) : null,
+        title: FittedBox(
+          fit: BoxFit.scaleDown,
+          alignment: Alignment.centerLeft,
+          child: Text(person.name),
+        ),
+        subtitle: person.email != null
+            ? FittedBox(
+                fit: BoxFit.scaleDown,
+                alignment: Alignment.centerLeft,
+                child: Text(person.email!),
+              )
+            : null,
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
