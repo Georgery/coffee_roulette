@@ -167,6 +167,7 @@ class _MyHomePageState extends State<MyHomePage> {
           name: nameController.text,
           email: emailController.text.isEmpty ? null : emailController.text,
         );
+        _matchedGroups = [];
       });
       Navigator.pop(context);
     }
@@ -393,6 +394,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   : () {
                                       setState(() {
                                         _people = [];
+                                        _matchedGroups = [];
                                       });
                                     },
                               style: OutlinedButton.styleFrom(
@@ -539,8 +541,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        if (_people.isNotEmpty)
-                          Row(
+                        Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -550,7 +551,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   child: AspectRatio(
                                     aspectRatio: 1,
                                     child: OutlinedButton(
-                                      onPressed: _matchPeople,
+                                      onPressed: _people.isEmpty ? null : _matchPeople,
                                       style: OutlinedButton.styleFrom(
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(12),
@@ -601,13 +602,15 @@ class _MyHomePageState extends State<MyHomePage> {
                                                   ),
                                                 ))
                                             .toList(),
-                                        onChanged: (value) {
-                                          if (value != null) {
-                                            setState(() {
-                                              _groupSize = value;
-                                            });
-                                          }
-                                        },
+                                        onChanged: _people.isEmpty
+                                            ? null
+                                            : (value) {
+                                                if (value != null) {
+                                                  setState(() {
+                                                    _groupSize = value;
+                                                  });
+                                                }
+                                              },
                                       ),
                                     ),
                                   ),

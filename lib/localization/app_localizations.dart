@@ -104,7 +104,7 @@ class AppLocalizations {
     },
     'groupSizeTooLarge': {
       AppLocale.en: 'That group size doesn\'t make any sense, but hey... whatever floats your boat.',
-      AppLocale.de: 'Die Gruppengröße ist Quatsch... aber naja, sind ja Deine Gruppen.',
+      AppLocale.de: 'Die Gruppengröße ist Quatsch... aber, naja, sind ja Deine Gruppen.',
     },
     'groupSizeAdjusted': {
       AppLocale.en: 'Not enough people for multiple groups',

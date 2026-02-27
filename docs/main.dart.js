@@ -42100,7 +42100,7 @@ s=k.c.ad(t.o3).f
 r=k.d.length
 q=k.r
 if(r<=q){q=k.c.ad(t.Pu).f
-s=B.Lg.h(0,s)
+s=B.Ld.h(0,s)
 s.toString
 q.w3(A.OP(j,j,j,j,j,B.Q,j,A.ce(s,j,j,j,j,j,j),j,B.fS,j,j,j,j,j,j,j,j,j,j))}else if(r<q*2){q=k.c.ad(t.Pu).f
 s=B.La.h(0,s)
@@ -42164,7 +42164,7 @@ p=B.Lh.h(0,e)
 p.toString
 o=B.L6.h(0,e)
 o.toString
-n=B.Le.h(0,e)
+n=B.Lf.h(0,e)
 n.toString
 m=B.Lq.h(0,e)
 m.toString
@@ -42183,24 +42183,26 @@ p=A.Au(g,g,g,g,g,g,g,g,g,g,g,g,g,g,new A.ck(A.ew(12),B.l),g,g,g,g,g)
 o=B.Lx.h(0,e)
 o.toString
 p=A.t7(A.kF(new A.bt(B.nn,A.f7(A.b([A.iU(A.b([new A.jr(1,B.dy,new A.ez(B.iL,new A.rl(1,A.As(A.KH(B.a5,new A.bt(B.dr,A.f7(A.b([B.Gr,B.hZ,A.ce(o,g,g,g,g,g,g)],r),B.aj,B.eR,B.aX),g),B.cF),g,q,p),g),g),g),B.QB,new A.jr(1,B.dy,new A.ez(B.iL,new A.rl(1,new A.yK(h.gadq(),g),g),g),g)],r),B.aj,B.a3,B.aX,g),B.zp,A.t7(A.aAD(new A.aom(h,d),h.d.length+1,!1),1)],r),B.aj,B.a3,B.aX),g),B.y,g,B.Bg,g,g,g,g),1)
-q=A.b([],r)
-if(h.d.length!==0){o=A.Au(g,g,g,g,g,g,g,g,g,g,g,g,g,g,new A.ck(A.ew(12),B.l),g,g,g,g,g)
+q=h.d.length===0?g:h.gacF()
+o=A.Au(g,g,g,g,g,g,g,g,g,g,g,g,g,g,new A.ck(A.ew(12),B.l),g,g,g,g,g)
 m=B.Lk.h(0,e)
 m.toString
-o=A.As(A.KH(B.a5,new A.bt(B.dr,A.f7(A.b([B.Gu,B.hZ,A.ce(m,g,g,g,g,g,g)],r),B.aj,B.eR,B.aX),g),B.cF),g,h.gacF(),o)
-m=B.Lf.h(0,e)
-m.toString
-m=A.ce(m,g,g,g,B.VA,g,g)
-j=h.r
-i=t.xt
-i=A.Y(new A.X(A.b([2,3,4,5],t.t),new A.aon(),i),i.i("ak.E"))
-q.push(A.iU(A.b([new A.jr(1,B.dy,new A.ez(B.iL,new A.rl(1,o,g),g),g),A.dx(A.f7(A.b([m,A.awx(A.dx(new A.t2(i,j,new A.aoo(h),!0,B.G,g,t.CB),g,120),B.My)],r),B.b7,B.a3,B.aP),g,120)],r),B.b7,B.ho,B.aX,g))}if(h.e.length!==0){o=B.Lw.h(0,e)
-o.toString
-o=A.ce(o,g,g,g,B.T7,B.bB,g)
-m=A.aAD(new A.aop(h,d),h.e.length,!0)
+o=A.As(A.KH(B.a5,new A.bt(B.dr,A.f7(A.b([B.Gu,B.hZ,A.ce(m,g,g,g,g,g,g)],r),B.aj,B.eR,B.aX),g),B.cF),g,q,o)
+q=B.Lg.h(0,e)
+q.toString
+q=A.ce(q,g,g,g,B.VA,g,g)
+m=h.r
+j=t.xt
+j=A.Y(new A.X(A.b([2,3,4,5],t.t),new A.aon(),j),j.i("ak.E"))
+i=h.d.length===0?g:new A.aoo(h)
+i=A.b([A.iU(A.b([new A.jr(1,B.dy,new A.ez(B.iL,new A.rl(1,o,g),g),g),A.dx(A.f7(A.b([q,A.awx(A.dx(new A.t2(j,m,i,!0,B.G,g,t.CB),g,120),B.My)],r),B.b7,B.a3,B.aP),g,120)],r),B.b7,B.ho,B.aX,g)],r)
+if(h.e.length!==0){q=B.Lw.h(0,e)
+q.toString
+q=A.ce(q,g,g,g,B.T7,B.bB,g)
+o=A.aAD(new A.aop(h,d),h.e.length,!0)
 e=B.Lo.h(0,e)
 e.toString
-B.b.P(q,A.b([B.QE,o,B.le,new A.jr(1,B.dy,m,g),B.le,new A.ek(B.fp,g,g,A.dx(A.PA(A.As(B.Gw,g,h.ga5Z(),A.Au(g,g,g,g,g,g,g,g,g,g,g,g,B.U,g,new A.ck(A.ew(8),B.l),g,g,g,g,g)),e),40,40),g)],r))}return new A.By(new A.x7(s,b,c,new A.UF(130,g,1/0,130),130,g),A.iU(A.b([new A.C2(l,k,g),A.t7(A.rv(new A.ez(new A.a8(0,n.a.a*0.6,0,1/0),A.iU(A.b([p,A.t7(A.kF(new A.bt(B.nn,A.f7(q,B.b7,B.a3,B.aX),g),B.y,g,B.Bh,g,g,g,g),1)],r),B.cM,B.a3,B.aX,g),g),g,g),1)],r),B.aj,B.a3,B.aX,g),g)}}
+B.b.P(i,A.b([B.QE,q,B.le,new A.jr(1,B.dy,o,g),B.le,new A.ek(B.fp,g,g,A.dx(A.PA(A.As(B.Gw,g,h.ga5Z(),A.Au(g,g,g,g,g,g,g,g,g,g,g,g,B.U,g,new A.ck(A.ew(8),B.l),g,g,g,g,g)),e),40,40),g)],r))}return new A.By(new A.x7(s,b,c,new A.UF(130,g,1/0,130),130,g),A.iU(A.b([new A.C2(l,k,g),A.t7(A.rv(new A.ez(new A.a8(0,n.a.a*0.6,0,1/0),A.iU(A.b([p,A.t7(A.kF(new A.bt(B.nn,A.f7(i,B.b7,B.a3,B.aX),g),B.y,g,B.Bh,g,g,g,g),1)],r),B.cM,B.a3,B.aX,g),g),g,g),1)],r),B.aj,B.a3,B.aX,g),g)}}
 A.aoq.prototype={
 $1(a){this.a.f.eF()},
 $S:6}
@@ -42238,9 +42240,10 @@ r.toString
 A.jJ(r,!1).qF(null)},
 $S:0}
 A.aoc.prototype={
-$0(){var s=this,r=s.a.d,q=s.c.a.a,p=s.d.a.a
-if(p.length===0)p=null
-r[s.b]=new A.fM(q,p)},
+$0(){var s=this,r=s.a,q=r.d,p=s.c.a.a,o=s.d.a.a
+if(o.length===0)o=null
+q[s.b]=new A.fM(p,o)
+r.e=A.b([],t._Z)},
 $S:0}
 A.aoa.prototype={
 $1(a){var s,r,q,p,o,n=this,m=null,l=n.a.a,k=B.Lp.h(0,l)
@@ -42325,7 +42328,9 @@ $0(){var s=this.a
 s.ah(new A.aoj(s))},
 $S:0}
 A.aoj.prototype={
-$0(){this.a.d=A.b([],t.Bs)},
+$0(){var s=this.a
+s.d=A.b([],t.Bs)
+s.e=A.b([],t._Z)},
 $S:0}
 A.aom.prototype={
 $2(a,b){var s,r,q,p=null,o=this.a,n=o.d
@@ -42457,7 +42462,7 @@ p=p!=null?A.KH(B.e4,A.ce(p,r,r,r,r,r,r),B.cF):r
 s=B.Ls.h(0,q)
 s.toString
 s=A.a5U(r,r,B.Gt,r,r,this.d,r,r,s)
-q=B.Ld.h(0,q)
+q=B.Le.h(0,q)
 q.toString
 return new A.Jb(new A.M6(o,p,A.iU(A.b([s,A.a5U(r,r,B.Gv,r,r,this.e,r,r,q)],t.p),B.aj,B.a3,B.aP,r),r),r)}}
 A.pt.prototype={}
@@ -49000,8 +49005,7 @@ break
 case 0:q=B.E2
 break}return q}},
 gpd(){var s=this.a
-s=s.c.length!==0
-return s},
+return s.c.length!==0&&s.r!=null},
 L(a){var s,r,q,p,o,n,m,l,k,j=this,i=null,h=A.c1(a,B.Ar),g=h==null?i:h.gmG()
 if(g==null){s=A.qA(a).got()
 g=s.a>s.b?B.uR:B.uQ}h=j.f
@@ -49074,7 +49078,7 @@ $1(a){var s=this.a
 s.EC()
 if(s.c==null||a==null)return
 s=s.a.r
-s.$1(a.a)},
+if(s!=null)s.$1(a.a)},
 $S(){return this.a.$ti.i("b4(ie<1>?)")}}
 A.alb.prototype={
 $1(a){var s
@@ -93623,11 +93627,11 @@ B.un=new A.b3([B.L,"Email",B.M,"E-Mail"],t.O)
 B.uo=new A.b3([B.L,"Group",B.M,"Gruppe"],t.O)
 B.Lb=new A.b3([B.L,"Matches copied to clipboard!",B.M,"Gruppen kopiert (Zwischenablage)"],t.O)
 B.Lc=new A.b3([B.L,'You\'re not. **The data never leaves your machine.** This is a so-called "static web app". Everything happens on your local machine. No data is sent to any server. You could even turn off your internet connection while using it.\n\nStill sceptical? - This is an open source project. Feel free to check the source code on [https://github.com/Georgery/coffee_roulette](https://github.com/Georgery/coffee_roulette).',B.M,"Tust Du nicht. **Die Daten verlassen Dein Ger\xe4t nicht.** Dies ist eine statische Web-App. Alles passiert auf Deinem Ger\xe4t, keinerlei Daten werden an irgendeinen Server geschickt. Du kannst sogar Deine Internetverbindung kappen, wenn Du willst.\n\nImmernoch skeptisch? - Das ist ein Open-Source Projekt. Du kannst Dir den Quellcode anschauen, unter [https://github.com/Georgery/coffee_roulette](https://github.com/Georgery/coffee_roulette)."],t.O)
+B.Ld=new A.b3([B.L,"That group size doesn't make any sense, but hey... whatever floats your boat.",B.M,"Die Gruppengr\xf6\xdfe ist Quatsch... aber, naja, sind ja Deine Gruppen."],t.O)
 B.up=new A.b3([B.L,"Add Person",B.M,"Person hinzuf\xfcgen"],t.O)
-B.Ld=new A.b3([B.L,"Delete",B.M,"L\xf6schen"],t.O)
-B.Le=new A.b3([B.L,"- Enter the names of people you want to connect.\n - Match them into random groups.\n - Notify them about their groupings - potentially using the emails you added.\n - Create a file with the names, that you can just drag-and-drop next time.",B.M,"- Gib die Namen der Leute ein, die Du verbinden willst.\n - Erstelle zuf\xe4llige Gruppen.\n - Informiere die Leute \xfcber ihre Gruppe - potenziell mit den E-Mail-Adressen, die Du hinzugef\xfcgt hast.\n - Erstelle eine Datei mit den Namen - beim n\xe4chsten Mal kannst Du sie einfach per drag-and-drop einf\xfcgen."],t.O)
-B.Lf=new A.b3([B.L,"Group Size",B.M,"Gruppengr\xf6\xdfe"],t.O)
-B.Lg=new A.b3([B.L,"That group size doesn't make any sense, but hey... whatever floats your boat.",B.M,"Die Gruppengr\xf6\xdfe ist Quatsch... aber naja, sind ja Deine Gruppen."],t.O)
+B.Le=new A.b3([B.L,"Delete",B.M,"L\xf6schen"],t.O)
+B.Lf=new A.b3([B.L,"- Enter the names of people you want to connect.\n - Match them into random groups.\n - Notify them about their groupings - potentially using the emails you added.\n - Create a file with the names, that you can just drag-and-drop next time.",B.M,"- Gib die Namen der Leute ein, die Du verbinden willst.\n - Erstelle zuf\xe4llige Gruppen.\n - Informiere die Leute \xfcber ihre Gruppe - potenziell mit den E-Mail-Adressen, die Du hinzugef\xfcgt hast.\n - Erstelle eine Datei mit den Namen - beim n\xe4chsten Mal kannst Du sie einfach per drag-and-drop einf\xfcgen."],t.O)
+B.Lg=new A.b3([B.L,"Group Size",B.M,"Gruppengr\xf6\xdfe"],t.O)
 B.uq=new A.b3([B.L,"Name",B.M,"Name"],t.O)
 B.Lh=new A.b3([B.L,"You're in an organization. Not everybody knows each other. But maybe they should...\n\n**Connect people in randomized groups** or pairs, so they can meet and get to know each other. Once a week you can build and let them know about the random group composition. Only thing left is that they set up a call or meeting.\n\nThis fosters knowledge sharing and team building and connects people who otherwise wouldn't meet.",B.M,"Du bist in einer Organisation? Nicht alle kennen sich... aber sollten sie vielleicht?\n\n**Verbinde Leute in zuf\xe4lligen Gruppen** oder Paaren. Sie k\xf6nnen sich dann beim Kaffee kennenlernen. Jede Woche werden neue Gruppen ausgelost. Sie m\xfcssen sich dann nur noch treffen - online oder offline.\n\nDas f\xf6rdert das Wissensaustausch und Teambuilding und Kollaboration."],t.O)
 B.Li=new A.b3([B.L,"Connect people randomly, so they can meet and get to know each other.",B.M,"Verbinde Leute zuf\xe4llig, damit sie sich kennenlernen."],t.O)
