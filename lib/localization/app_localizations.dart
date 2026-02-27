@@ -20,7 +20,7 @@ class AppLocalizations {
     },
     'addNames': {
       AppLocale.en: 'Add Names',
-      AppLocale.de: 'um Namen\nhinzuzufügen',
+      AppLocale.de: '(um Namen\nhinzuzufügen)',
     },
     'dropFileHere': {
       AppLocale.en: 'Drop file here',
@@ -106,6 +106,30 @@ class AppLocalizations {
       AppLocale.en: 'Not enough people for multiple groups',
       AppLocale.de: 'Nicht genug Leute für mehrere Gruppen',
     },
+    'menuAbout': {
+      AppLocale.en: 'About',
+      AppLocale.de: 'Über',
+    },
+    'menuAboutContent': {
+      AppLocale.en: 'Coffee Roulette helps you randomly match people into groups for coffee meetings or team activities.\n\nSimply add participants, set your preferred group size, and click Match to create random groups.',
+      AppLocale.de: 'Coffee Roulette hilft dir, Leute zufällig in Gruppen für Kaffeepausen oder Teamaktivitäten einzuteilen.\n\nFüge einfach Teilnehmer hinzu, wähle die gewünschte Gruppengröße und klicke auf Matchen!',
+    },
+    'menuHowToUse': {
+      AppLocale.en: 'How to use',
+      AppLocale.de: 'Anleitung',
+    },
+    'menuHowToUseContent': {
+      AppLocale.en: 'How to use:\n\n1. Add people manually using the + button\n2. Or drag & drop a text file with names\n3. Each line should contain: Name (Email)\n4. Select your desired group size\n5. Click the coffee icon to match!',
+      AppLocale.de: 'So geht\'s:\n\n1. Personen manuell mit dem + Button hinzufügen\n2. Oder eine Textdatei mit Namen per Drag & Drop einfügen\n3. Jede Zeile sollte enthalten: Name (E-Mail)\n4. Gewünschte Gruppengröße auswählen\n5. Auf das Kaffee-Symbol klicken zum Matchen!',
+    },
+    'menuTips': {
+      AppLocale.en: 'Tips',
+      AppLocale.de: 'Tipps',
+    },
+    'menuTipsContent': {
+      AppLocale.en: 'Tips:\n\n• You can edit any person by clicking on their tile\n• Download your list to save it for later\n• Copy all emails with one click\n• Copy matched groups to share them easily',
+      AppLocale.de: 'Tipps:\n\n• Klicke auf eine Person, um sie zu bearbeiten\n• Lade deine Liste herunter, um sie später wiederzuverwenden\n• Kopiere alle E-Mails mit einem Klick\n• Kopiere die Gruppen, um sie einfach zu teilen',
+    },
   };
 
   String get appTitle             => _translations['appTitle']![locale]!;
@@ -133,4 +157,10 @@ class AppLocalizations {
   String get group                => _translations['group']![locale]!;
   String get groupSizeTooLarge    => _translations['groupSizeTooLarge']![locale]!;
   String get groupSizeAdjusted    => _translations['groupSizeAdjusted']![locale]!;
+  String get menuAbout            => _translations['menuAbout']![locale]!;
+  String get menuAboutContent     => _translations['menuAboutContent']![locale]!;
+  String get menuHowToUse         => _translations['menuHowToUse']![locale]!;
+  String get menuHowToUseContent  => _translations['menuHowToUseContent']![locale]!;
+  String get menuTips             => _translations['menuTips']![locale]!;
+  String get menuTipsContent      => _translations['menuTipsContent']![locale]!;
 }

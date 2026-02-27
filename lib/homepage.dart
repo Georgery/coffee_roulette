@@ -7,6 +7,7 @@ import 'localization/app_localizations.dart';
 import 'localization/locale_provider.dart';
 import 'widgets/file_drop_zone.dart';
 import 'widgets/person_tile.dart';
+import 'widgets/side_menu.dart';
 import 'person.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -49,7 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
     final content = _people.map((p) => p.toLine()).join('\n');
     final blob = html.Blob([content], 'text/plain');
     final url = html.Url.createObjectUrlFromBlob(blob);
-    final anchor = html.AnchorElement(href: url)
+    html.AnchorElement(href: url)
       ..setAttribute('download', 'people.txt')
       ..click();
     html.Url.revokeObjectUrl(url);
@@ -105,11 +106,6 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _matchedGroups = groups;
     });
-  }
-
-  int get _maxNameLength {
-    if (_people.isEmpty) return 0;
-    return _people.map((p) => p.name.length).reduce((a, b) => a > b ? a : b);
   }
 
   String _getMatchedGroupsText() {
@@ -316,12 +312,31 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
       ),
-      body: Center(
-        child: ConstrainedBox(
-          constraints: BoxConstraints(
-            maxWidth: MediaQuery.of(context).size.width * 0.6,
+      body: Row(
+        children: [
+          SideMenu(
+            items: [
+              MenuItem(
+                title: l10n.menuAbout,
+                content: l10n.menuAboutContent,
+              ),
+              MenuItem(
+                title: l10n.menuHowToUse,
+                content: l10n.menuHowToUseContent,
+              ),
+              MenuItem(
+                title: l10n.menuTips,
+                content: l10n.menuTipsContent,
+              ),
+            ],
           ),
-          child: Row(
+          Expanded(
+            child: Center(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxWidth: MediaQuery.of(context).size.width * 0.6,
+                ),
+                child: Row(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Expanded(
@@ -639,7 +654,10 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ],
           ),
-        ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
