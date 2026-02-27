@@ -3,8 +3,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'l10n/app_localizations.dart';
-import 'l10n/locale_provider.dart';
+import 'localization/app_localizations.dart';
+import 'localization/locale_provider.dart';
 import 'widgets/file_drop_zone.dart';
 import 'widgets/person_tile.dart';
 import 'person.dart';
@@ -223,6 +223,7 @@ class _MyHomePageState extends State<MyHomePage> {
               email: emailController.text.isEmpty ? null : emailController.text,
             ),
           }.toList();
+          _matchedGroups = [];
         });
       }
       Navigator.pop(context);

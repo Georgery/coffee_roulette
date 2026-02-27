@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'homepage.dart';
-import 'l10n/app_localizations.dart';
-import 'l10n/locale_provider.dart';
+import 'localization/app_localizations.dart';
+import 'localization/locale_provider.dart';
 
 void main() {
   runApp(const MyApp());

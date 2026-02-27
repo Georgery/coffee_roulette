@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../l10n/locale_provider.dart';
+import '../localization/locale_provider.dart';
 import '../person.dart';
 
 class PersonTile extends StatelessWidget {

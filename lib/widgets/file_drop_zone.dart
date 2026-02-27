@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:desktop_drop/desktop_drop.dart';
-import '../l10n/locale_provider.dart';
+import '../localization/locale_provider.dart';
 
 class FileDropZone extends StatefulWidget {
   final void Function(String content) onFileDropped;
