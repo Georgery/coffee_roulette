@@ -1,4 +1,5 @@
-import 'dart:html' as html;
+import 'dart:js_interop';
+import 'package:web/web.dart' as web;
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -48,12 +49,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _downloadPeople() {
     final content = _people.map((p) => p.toLine()).join('\n');
-    final blob = html.Blob([content], 'text/plain');
-    final url = html.Url.createObjectUrlFromBlob(blob);
-    html.AnchorElement(href: url)
-      ..setAttribute('download', 'people.txt')
+    final blob = web.Blob([content.toJS].toJS, web.BlobPropertyBag(type: 'text/plain'));
+    final url = web.URL.createObjectURL(blob);
+    web.HTMLAnchorElement()
+      ..href = url
+      ..download = 'people.txt'
       ..click();
-    html.Url.revokeObjectUrl(url);
+    web.URL.revokeObjectURL(url);
   }
 
   void _onFileDropped(String content) {
